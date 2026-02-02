@@ -1,136 +1,69 @@
-# URLSession Implementation with async/await
+# Step 2: Displaying Remote Images with AsyncImage
 
-Follow these steps to implement networking in iOS using URLSession and Swift's modern concurrency.
+Learn how to load and display images from a URL using SwiftUI's built-in `AsyncImage`.
 
-### 1. Dependencies Needed
-iOS has built-in networking support with URLSession.
+### 1. No External Dependencies Needed
+SwiftUI includes `AsyncImage` out of the box, so no additional dependencies are required.
 
-No dependencies required for basic networking!
+### 2. Update State to hold Pet objects
+To access the image URL, we must store the full data objects in our state instead of just a list of names.
 
-### 2. Add Network Permission (if needed for local development)
-In `Info.plist` (only if connecting to non-HTTPS endpoints):
-```xml
-<key>NSAppTransportSecurity</key>
-<dict>
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
-</dict>
-```
-
-For our API (https://www.zaragoza.es), HTTPS is already used, so no changes needed!
-
-### 3. Define Data Models
-The API returns data in JSON format. We'll create Swift structs that conform to `Codable` protocol.
-The JSON will be automatically converted to these structs by `JSONDecoder`.
-
-Create `Data/Pet.swift`:
+In `ContentView.swift`:
 ```swift
-struct PetResponse: Codable {
-    let result: [Pet]
-}
-
-struct Pet: Codable, Identifiable {
-    let id: String
-    let name: String
-    let description: String?
-    let imageUrl: String?
+struct ContentView: View {
+    // Define the state as an array of Pet objects
+    @State private var pets: [Pet] = []
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name = "nombre"
-        case description = "observations"
-        case imageUrl = "foto"
+    var body: some View {
+        // ...
+    }
+    .task {
+        let petResponse = await petService.getPets()
+        // Update the state with the full objects from the API
+        pets = petResponse.result
     }
 }
 ```
 
-### 4. Create API Service
-This actor handles network requests using async/await. Using `actor` ensures thread-safety for our network service.
+### 3. Display the Image using AsyncImage
+The `AsyncImage` view handles the complexity of downloading, caching, and rendering remote images.
 
-Create `Data/PetService.swift`:
+In `ContentView.swift`:
 ```swift
-actor PetService {
-    private let baseURL = "https://www.zaragoza.es/sede/servicio/"
+struct PetItem: View {
+    let pet: Pet
     
-    func getPets() async throws -> PetResponse {
-        guard let url = URL(string: baseURL + "mascotas") else {
-            throw URLError(.badURL)
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            AsyncImage(url: URL(string: "https://" + pet.imageUrl)) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 150, height: 150)
+            .clipped() // Crops the image to fill the square area
+            
+            // Add a background to the text for better contrast
+            Text(pet.name)
+                .foregroundColor(.white)
+                .padding(8)
+                .frame(maxWidth: .infinity)
+                .background(Color.black.opacity(0.5))
         }
-        
-        var request = URLRequest(url: url)
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        
-        let (data, _) = try await URLSession.shared.data(for: request)
-        return try JSONDecoder().decode(PetResponse.self, from: data)
+        .frame(width: 150, height: 150)
     }
 }
 ```
 
-### 5. Setup Environment for Dependency Injection
-This is how to provide our PetService throughout the app using SwiftUI's Environment.
-We create an environment key so we can access the service in any view.
+### 4. Add a NavigationStack with Title
+`NavigationStack` is usded for navigation and displaying a title bar.
+We use it with a `.navigationTitle`, but it also supports toolbar items, search, and more.
 
-Create `Data/PetServiceKey.swift`:
 ```swift
-import SwiftUI
-
-private struct PetServiceKey: EnvironmentKey {
-    static let defaultValue: PetService = PetService()
+NavigationStack {
+    // Your content here
 }
-
-extension EnvironmentValues {
-    var petService: PetService {
-        get { self[PetServiceKey.self] }
-        set { self[PetServiceKey.self] = newValue }
-    }
-}
-```
-
-Inject the service at app level in `AmosDelDogtownApp.swift`:
-```swift
-@main
-struct AmosDelDogtownApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-                .environment(\.petService, PetService())
-        }
-    }
-}
-```
-
-### 6. Add changes in ContentView
-Access the API service from the environment. We'll use it to call the api.
-```swift
-@Environment(\.petService) private var petApiService
-```
-
-Create a new state that will store the pet names we receive from the api request.
-```swift
-@State private var pets: [String] = []
-```
-
-Use our state in PetList
-```swift
-PetList(pets: pets)
-```
-
-Let's get real, call the api:
-```swift
-.task {
-    do {
-        // Execute the request call
-        let petResponse = try await petApiService.getPets()
-        
-        // From the response, for now we only want the names of the pets
-        let names = petResponse.result.map { pet in
-            pet.name
-        }
-        
-        // Store the new list of names in the state
-        pets = names
-    } catch {
-        print("Error: \(error)")
-    }
-}
+.navigationTitle("Amos Del Dogtown")
 ```
