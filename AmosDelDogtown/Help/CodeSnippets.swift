@@ -1,16 +1,14 @@
 import SwiftUI
 
-/* Inside ContentView body:
-PetList(pets: ["Amos", "Rex", "Buddy", "Max", "Bella"])
-*/
-
 struct PetList: View {
     let pets: [String]
     
     var body: some View {
-        VStack {
-            ForEach(pets, id: \.self) { pet in
-                PetItem(name: pet)
+        ScrollView {
+            VStack {
+                ForEach(pets, id: \.self) { pet in
+                    PetItem(name: pet)
+                }
             }
         }
     }
