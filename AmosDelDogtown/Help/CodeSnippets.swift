@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PetList: View {
-    let pets: [String]
+    let pets: [Pet]
     
     private let columns = [
         GridItem(.flexible()),
@@ -11,8 +11,8 @@ struct PetList: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: columns) {
-                ForEach(pets, id: \.self) { pet in
-                    PetItem(name: pet)
+                ForEach(pets) { pet in
+                    PetItem(pet: pet)
                 }
             }
         }
@@ -20,21 +20,38 @@ struct PetList: View {
 }
 
 struct PetItem: View {
-    let name: String
+    let pet: Pet
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.gray.opacity(0.3))
+        ZStack(alignment: .bottom) {
+            if let imageUrl = pet.imageUrl {
+                AsyncImage(url: URL(string: "https:" + imageUrl)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(width: 150, height: 150)
+                .clipped() // Crops the image to fill the square area
+            }
             
-            Text(name)
-                .padding(24)
+            // Add a background to the text for better contrast
+            Text(pet.name)
+                .foregroundColor(.white)
+                .padding(8)
+                .frame(maxWidth: .infinity)
+                .background(Color.black.opacity(0.5))
         }
-        .frame(maxWidth: .infinity)
-        .padding(8)
+        .frame(width: 150, height: 150)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
 
 #Preview {
-    PetList(pets: ["Amos", "Rex", "Buddy"])
+    PetList(pets: [
+        Pet(id: 1, name: "Amos", description: "Description", imageUrl: "https://example.com/image.jpg"),
+        Pet(id: 2, name: "Rex", description: "Description", imageUrl: "https://example.com/image.jpg"),
+        Pet(id: 3, name: "Buddy", description: "Description", imageUrl: "https://example.com/image.jpg")
+    ])
 }
