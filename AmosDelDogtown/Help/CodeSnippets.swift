@@ -3,9 +3,14 @@ import SwiftUI
 struct PetList: View {
     let pets: [String]
     
+    private let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
     var body: some View {
         ScrollView {
-            VStack {
+            LazyVGrid(columns: columns) {
                 ForEach(pets, id: \.self) { pet in
                     PetItem(name: pet)
                 }
