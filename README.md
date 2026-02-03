@@ -1,51 +1,185 @@
-# Step 2: Displaying Remote Images with AsyncImage
+# Adding good architecture principles
 
-Learn how to load and display images from a URL using SwiftUI's built-in `AsyncImage`.
+Learn how to structure your SwiftUI app with proper separation of concerns using ViewModels, Repositories, and Protocols for testability.
 
 ### 1. No External Dependencies Needed
-SwiftUI includes `AsyncImage` out of the box, so no additional dependencies are required.
+SwiftUI includes the `@Observable` macro out of the box for creating ViewModels, so no additional packages are required.
 
-### 2. Update State to hold Pet objects
-To access the image URL, we must store the full data objects in our state instead of just a list of names.
+### 2. Project Structure
+Organize your code into logical folders:
+```
+AmosDelDogtown/
+├── Data/
+│   ├── Models/
+│   │   └── Pet.swift
+│   ├── Repositories/
+│   │   └── PetRepository.swift
+│   └── Services/
+│       └── PetService.swift
+└── UI/
+    ├── View/
+    │   ├── ContentView.swift
+    │   ├── PetListView.swift
+    │   └── PetItemView.swift
+    └── ViewModel/
+        └── ContentViewModel.swift
+```
 
-In `ContentView.swift`:
+### 3. Add Protocols for Testability
+Protocols allow us to inject mock implementations for testing.
+
+Update `PetService.swift` to add a protocol:
 ```swift
-struct ContentView: View {
-    // Define the state as an array of Pet objects
-    @State private var pets: [Pet] = []
+import Foundation
+
+protocol PetServiceProtocol: Sendable {
+    func getPets() async throws -> PetResponse
+}
+
+actor PetService: PetServiceProtocol {
+    private let baseURL = "https://www.zaragoza.es/sede/servicio/"
     
-    var body: some View {
-        // ...
-    }
-    .task {
-        let petResponse = await petService.getPets()
-        // Update the state with the full objects from the API
-        pets = petResponse.result
+    func getPets() async throws -> PetResponse {
+        guard let url = URL(string: baseURL + "mascotas") else {
+            throw URLError(.badURL)
+        }
+        
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        return try JSONDecoder().decode(PetResponse.self, from: data)
     }
 }
 ```
 
-### 3. Display the Image using AsyncImage
-The `AsyncImage` view handles the complexity of downloading, caching, and rendering remote images.
+### 4. Add Repository with Protocol
+Repositories are in charge of communicating with network or databases.
+The ViewModel requests information from the repo, and the repo is in charge of getting it from where it considers most appropriate.
+E.g., It might get it from a database first, and then trigger a request in the background to get fresh data.
 
-In `ContentView.swift`:
+Create `PetRepository.swift`:
+```swift
+import Foundation
+
+protocol PetRepositoryProtocol: Sendable {
+    func getPets() async throws -> [Pet]
+}
+
+final class PetRepository: PetRepositoryProtocol {
+    private let petService: PetServiceProtocol
+    
+    init(petService: PetServiceProtocol = PetService()) {
+        self.petService = petService
+    }
+    
+    func getPets() async throws -> [Pet] {
+        return try await petService.getPets().result
+    }
+}
+```
+
+### 5. Create the ViewModel
+The ViewModel will have an instance to the repository and exposes data to the UI through `@Observable`.
+`@Observable` automatically tracks changes and updates the UI when properties change.
+
+Create `ContentViewModel.swift`:
+```swift
+import Foundation
+
+@Observable
+class ContentViewModel {
+    private let petRepository: PetRepositoryProtocol
+    
+    // The UI state properties that the view will observe
+    var pets: [Pet] = []
+    var isLoading: Bool = false
+    var error: String? = nil
+    
+    init(petRepository: PetRepositoryProtocol = PetRepository()) {
+        self.petRepository = petRepository
+    }
+    
+    // Call this when the view appears
+    @MainActor
+    func fetchPets() async {
+        // Post to the UI that we are loading
+        isLoading = true
+        error = nil
+        
+        do {
+            // Call the repository
+            pets = try await petRepository.getPets()
+            isLoading = false
+        } catch {
+            // Post to the UI the error
+            isLoading = false
+            self.error = error.localizedDescription
+        }
+    }
+}
+```
+
+### 6. Update ContentView to use the ViewModel
+```swift
+struct ContentView: View {
+    @State private var viewModel: ContentViewModel = ContentViewModel()
+    
+    var body: some View {
+        NavigationStack {
+            PetList(pets: viewModel.pets)
+                .navigationTitle("Amos Del Dogtown")
+        }
+        .task {
+            await viewModel.fetchPets()
+        }
+    }
+}
+```
+
+### 7. Create Reusable UI Components
+
+**PetListView.swift** - A grid that displays pet items:
+```swift
+struct PetList: View {
+    let pets: [Pet]
+    
+    private let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: columns) {
+                ForEach(pets) { pet in
+                    PetItem(pet: pet)
+                }
+            }
+        }
+    }
+}
+```
+
+**PetItemView.swift** - Individual pet card with image:
 ```swift
 struct PetItem: View {
     let pet: Pet
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            AsyncImage(url: URL(string: "https://" + pet.imageUrl)) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            } placeholder: {
-                ProgressView()
+            if let imageUrl = pet.imageUrl {
+                AsyncImage(url: URL(string: "https:" + imageUrl)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(width: 150, height: 150)
+                .clipped()
             }
-            .frame(width: 150, height: 150)
-            .clipped() // Crops the image to fill the square area
             
-            // Add a background to the text for better contrast
             Text(pet.name)
                 .foregroundColor(.white)
                 .padding(8)
@@ -53,17 +187,7 @@ struct PetItem: View {
                 .background(Color.black.opacity(0.5))
         }
         .frame(width: 150, height: 150)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
-```
-
-### 4. Add a NavigationStack with Title
-`NavigationStack` is usded for navigation and displaying a title bar.
-We use it with a `.navigationTitle`, but it also supports toolbar items, search, and more.
-
-```swift
-NavigationStack {
-    // Your content here
-}
-.navigationTitle("Amos Del Dogtown")
 ```
