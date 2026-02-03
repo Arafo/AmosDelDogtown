@@ -1,6 +1,10 @@
 import Foundation
 
-actor PetService {
+protocol PetServiceProtocol: Sendable {
+    func getPets() async throws -> PetResponse
+}
+
+actor PetService: PetServiceProtocol {
     private let baseURL = "https://www.zaragoza.es/sede/servicio/"
     
     func getPets() async throws -> PetResponse {

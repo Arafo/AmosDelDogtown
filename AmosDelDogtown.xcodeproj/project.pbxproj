@@ -9,13 +9,15 @@
 /* Begin PBXBuildFile section */
 		038532442F3102C6006C2A22 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038532402F3102C6006C2A22 /* Pet.swift */; };
 		038532452F3102C6006C2A22 /* PetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038532412F3102C6006C2A22 /* PetService.swift */; };
-		038532462F3102C6006C2A22 /* PetServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038532422F3102C6006C2A22 /* PetServiceKey.swift */; };
+		038532482F3115F3006C2A22 /* PetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038532472F3115F3006C2A22 /* PetRepository.swift */; };
+		0385324B2F311622006C2A22 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0385324A2F311622006C2A22 /* ContentViewModel.swift */; };
+		038532502F31E183006C2A22 /* PetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0385324F2F31E183006C2A22 /* PetListView.swift */; };
 		8A1B2C3D4E5F6A7B8C9D0E1F /* AmosDelDogtownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F6A7B8C9D0E10 /* AmosDelDogtownApp.swift */; };
 		8A1B2C3D4E5F6A7B8C9D0E20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F6A7B8C9D0E21 /* ContentView.swift */; };
 		8A1B2C3D4E5F6A7B8C9D0E22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F6A7B8C9D0E23 /* Assets.xcassets */; };
 		8A1B2C3D4E5F6A7B8C9D0E24 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F6A7B8C9D0E25 /* Preview Assets.xcassets */; };
 		8A1B2C3D4E5F6A7B8C9D0E30 /* AmosDelDogtownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F6A7B8C9D0E31 /* AmosDelDogtownTests.swift */; };
-		8A1B2C3D4E5F6A7B8C9D0EA0 /* CodeSnippets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F6A7B8C9D0EA1 /* CodeSnippets.swift */; };
+		8A1B2C3D4E5F6A7B8C9D0EA0 /* PetItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F6A7B8C9D0EA1 /* PetItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,7 +33,9 @@
 /* Begin PBXFileReference section */
 		038532402F3102C6006C2A22 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		038532412F3102C6006C2A22 /* PetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetService.swift; sourceTree = "<group>"; };
-		038532422F3102C6006C2A22 /* PetServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetServiceKey.swift; sourceTree = "<group>"; };
+		038532472F3115F3006C2A22 /* PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetRepository.swift; sourceTree = "<group>"; };
+		0385324A2F311622006C2A22 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		0385324F2F31E183006C2A22 /* PetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetListView.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F6A7B8C9D0E09 /* AmosDelDogtown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmosDelDogtown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A1B2C3D4E5F6A7B8C9D0E10 /* AmosDelDogtownApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmosDelDogtownApp.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F6A7B8C9D0E21 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -39,7 +43,7 @@
 		8A1B2C3D4E5F6A7B8C9D0E25 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A1B2C3D4E5F6A7B8C9D0E31 /* AmosDelDogtownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmosDelDogtownTests.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F6A7B8C9D0E41 /* AmosDelDogtownTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmosDelDogtownTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A1B2C3D4E5F6A7B8C9D0EA1 /* CodeSnippets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSnippets.swift; sourceTree = "<group>"; };
+		8A1B2C3D4E5F6A7B8C9D0EA1 /* PetItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,11 +67,62 @@
 		038532432F3102C6006C2A22 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				038532402F3102C6006C2A22 /* Pet.swift */,
-				038532412F3102C6006C2A22 /* PetService.swift */,
-				038532422F3102C6006C2A22 /* PetServiceKey.swift */,
+				0385324E2F31E14E006C2A22 /* Repositories */,
+				0385324D2F31E13B006C2A22 /* Services */,
+				0385324C2F31E135006C2A22 /* Models */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		038532492F31160A006C2A22 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				038532522F31E1FE006C2A22 /* ViewModel */,
+				038532512F31E1E4006C2A22 /* View */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		0385324C2F31E135006C2A22 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				038532402F3102C6006C2A22 /* Pet.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0385324D2F31E13B006C2A22 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				038532412F3102C6006C2A22 /* PetService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0385324E2F31E14E006C2A22 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				038532472F3115F3006C2A22 /* PetRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		038532512F31E1E4006C2A22 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0385324F2F31E183006C2A22 /* PetListView.swift */,
+				8A1B2C3D4E5F6A7B8C9D0E21 /* ContentView.swift */,
+				8A1B2C3D4E5F6A7B8C9D0EA1 /* PetItemView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		038532522F31E1FE006C2A22 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0385324A2F311622006C2A22 /* ContentViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		8A1B2C3D4E5F6A7B8C9D0E00 = {
@@ -91,10 +146,9 @@
 		8A1B2C3D4E5F6A7B8C9D0E11 /* AmosDelDogtown */ = {
 			isa = PBXGroup;
 			children = (
+				038532492F31160A006C2A22 /* UI */,
 				038532432F3102C6006C2A22 /* Data */,
 				8A1B2C3D4E5F6A7B8C9D0E10 /* AmosDelDogtownApp.swift */,
-				8A1B2C3D4E5F6A7B8C9D0E21 /* ContentView.swift */,
-				8A1B2C3D4E5F6A7B8C9D0EA2 /* Help */,
 				8A1B2C3D4E5F6A7B8C9D0E23 /* Assets.xcassets */,
 				8A1B2C3D4E5F6A7B8C9D0E26 /* Preview Content */,
 			);
@@ -115,14 +169,6 @@
 				8A1B2C3D4E5F6A7B8C9D0E31 /* AmosDelDogtownTests.swift */,
 			);
 			path = AmosDelDogtownTests;
-			sourceTree = "<group>";
-		};
-		8A1B2C3D4E5F6A7B8C9D0EA2 /* Help */ = {
-			isa = PBXGroup;
-			children = (
-				8A1B2C3D4E5F6A7B8C9D0EA1 /* CodeSnippets.swift */,
-			);
-			path = Help;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,10 +273,12 @@
 			files = (
 				8A1B2C3D4E5F6A7B8C9D0E20 /* ContentView.swift in Sources */,
 				8A1B2C3D4E5F6A7B8C9D0E1F /* AmosDelDogtownApp.swift in Sources */,
-				8A1B2C3D4E5F6A7B8C9D0EA0 /* CodeSnippets.swift in Sources */,
+				038532482F3115F3006C2A22 /* PetRepository.swift in Sources */,
+				8A1B2C3D4E5F6A7B8C9D0EA0 /* PetItemView.swift in Sources */,
 				038532442F3102C6006C2A22 /* Pet.swift in Sources */,
+				038532502F31E183006C2A22 /* PetListView.swift in Sources */,
 				038532452F3102C6006C2A22 /* PetService.swift in Sources */,
-				038532462F3102C6006C2A22 /* PetServiceKey.swift in Sources */,
+				0385324B2F311622006C2A22 /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
