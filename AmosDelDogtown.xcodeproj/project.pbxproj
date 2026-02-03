@@ -12,6 +12,7 @@
 		038532482F3115F3006C2A22 /* PetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038532472F3115F3006C2A22 /* PetRepository.swift */; };
 		0385324B2F311622006C2A22 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0385324A2F311622006C2A22 /* ContentViewModel.swift */; };
 		038532502F31E183006C2A22 /* PetListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0385324F2F31E183006C2A22 /* PetListView.swift */; };
+		038532542F3221FE006C2A22 /* MainContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038532532F3221FE006C2A22 /* MainContentView.swift */; };
 		8A1B2C3D4E5F6A7B8C9D0E1F /* AmosDelDogtownApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F6A7B8C9D0E10 /* AmosDelDogtownApp.swift */; };
 		8A1B2C3D4E5F6A7B8C9D0E20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F6A7B8C9D0E21 /* ContentView.swift */; };
 		8A1B2C3D4E5F6A7B8C9D0E22 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A1B2C3D4E5F6A7B8C9D0E23 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 		038532472F3115F3006C2A22 /* PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetRepository.swift; sourceTree = "<group>"; };
 		0385324A2F311622006C2A22 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		0385324F2F31E183006C2A22 /* PetListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetListView.swift; sourceTree = "<group>"; };
+		038532532F3221FE006C2A22 /* MainContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentView.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F6A7B8C9D0E09 /* AmosDelDogtown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmosDelDogtown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A1B2C3D4E5F6A7B8C9D0E10 /* AmosDelDogtownApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmosDelDogtownApp.swift; sourceTree = "<group>"; };
 		8A1B2C3D4E5F6A7B8C9D0E21 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		038532512F31E1E4006C2A22 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				038532532F3221FE006C2A22 /* MainContentView.swift */,
 				0385324F2F31E183006C2A22 /* PetListView.swift */,
 				8A1B2C3D4E5F6A7B8C9D0E21 /* ContentView.swift */,
 				8A1B2C3D4E5F6A7B8C9D0EA1 /* PetItemView.swift */,
@@ -276,6 +279,7 @@
 				038532482F3115F3006C2A22 /* PetRepository.swift in Sources */,
 				8A1B2C3D4E5F6A7B8C9D0EA0 /* PetItemView.swift in Sources */,
 				038532442F3102C6006C2A22 /* Pet.swift in Sources */,
+				038532542F3221FE006C2A22 /* MainContentView.swift in Sources */,
 				038532502F31E183006C2A22 /* PetListView.swift in Sources */,
 				038532452F3102C6006C2A22 /* PetService.swift in Sources */,
 				0385324B2F311622006C2A22 /* ContentViewModel.swift in Sources */,

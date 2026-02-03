@@ -9,11 +9,9 @@ struct PetList: View {
     ]
     
     var body: some View {
-        ScrollView {
-            LazyVGrid(columns: columns) {
-                ForEach(pets) { pet in
-                    PetItem(pet: pet)
-                }
+        LazyVGrid(columns: columns) {
+            ForEach(pets) { pet in
+                PetItem(pet: pet)
             }
         }
     }

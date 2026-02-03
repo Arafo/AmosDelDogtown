@@ -13,6 +13,12 @@ class ContentViewModel {
     }
     
     @MainActor
+    func onRefresh() async {
+        try? await Task.sleep(for: .seconds(1))
+        await fetchPets()
+    }
+    
+    @MainActor
     func fetchPets() async {
         // Post to the UI that we are loading
         isLoading = true
